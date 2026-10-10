@@ -1,203 +1,711 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudentHub | Student Management</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudentHub | Your Student Space</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #5b5ce2;
+  --dark: #20213a;
+  --muted: #777b91;
+  --bg: #f6f7fc;
+  --white: #ffffff;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+header {
+  background: var(--white);
+  padding: 18px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #ededf5;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.logo span {
+  color: var(--dark);
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  margin-left: 22px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+nav a:hover {
+  color: var(--primary);
+}
+
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 32px 24px;
+}
+
+.hero {
+  background: linear-gradient(120deg, #5b5ce2, #8884ff);
+  color: white;
+  border-radius: 24px;
+  padding: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  overflow: hidden;
+}
+
+.hero h1 {
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.2;
+  margin: 12px 0;
+}
+
+.hero p {
+  color: #eeedff;
+  max-width: 560px;
+}
+
+.tag {
+  display: inline-block;
+  background: #ffffff26;
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.hero-icon {
+  font-size: 100px;
+  flex-shrink: 0;
+}
+
+.section {
+  margin-top: 38px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.section-heading h2 {
+  font-size: 23px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 3px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.stat-card, .resource-card, .task-panel {
+  background: var(--white);
+  border: 1px solid #ececf5;
+  border-radius: 18px;
+  padding: 22px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #eeedff;
+  font-size: 23px;
+}
+
+.stat-card h3 {
+  font-size: 24px;
+}
+
+.stat-card p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.search-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px 15px;
+  border: 1px solid #e2e3ee;
+  border-radius: 12px;
+  background: white;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-box:focus {
+  border-color: var(--primary);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.filter-btn {
+  border: 1px solid #e6e6f1;
+  background: white;
+  color: var(--muted);
+  padding: 8px 15px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.resource-card {
+  transition: transform .2s, box-shadow .2s;
+}
+
+.resource-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px #29295b10;
+}
+
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.category {
+  display: inline-block;
+  color: var(--primary);
+  background: #f0efff;
+  border-radius: 7px;
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.resource-card h3 {
+  font-size: 17px;
+  margin-bottom: 7px;
+}
+
+.resource-card p {
+  color: var(--muted);
+  font-size: 13px;
+  min-height: 42px;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+}
+
+.lower-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+  margin-top: 36px;
+}
+
+.task-panel h2 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.task-form {
+  display: flex;
+  gap: 8px;
+  margin: 18px 0;
+}
+
+.task-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid #e2e3ee;
+  border-radius: 10px;
+  outline: none;
+}
+
+.task-form button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#taskList {
+  list-style: none;
+}
+
+#taskList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0;
+  border-bottom: 1px solid #f0f0f7;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+#taskList li span {
+  flex: 1;
+}
+
+#taskList li.done span {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-btn {
+  border: none;
+  background: transparent;
+  color: #d35b68;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.tip {
+  background: #f0efff;
+  padding: 20px;
+  border-radius: 14px;
+  margin-top: 16px;
+}
+
+.tip h3 {
+  margin-bottom: 7px;
+}
+
+.tip p {
+  color: #626481;
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  padding: 28px 15px;
+  margin-top: 38px;
+  color: var(--muted);
+  font-size: 13px;
+  background: white;
+  border-top: 1px solid #ededf5;
+}
+
+.empty {
+  color: var(--muted);
+  padding: 15px 0;
+  font-size: 14px;
+}
+
+@media (max-width: 850px) {
+  .resource-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero-icon {
+    font-size: 72px;
+  }
+
+  .lower-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 16px 5%;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    margin-left: 0;
+    margin-right: 15px;
+  }
+
+  main {
+    padding: 22px 15px;
+  }
+
+  .hero {
+    padding: 28px 22px;
+  }
+
+  .hero-icon {
+    display: none;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .resource-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .search-box {
+    max-width: none;
+  }
+}
+</style>
 </head>
+
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <a class="brand" href="#dashboard">
-        <span class="brand-logo">S</span>
-        <span>Student<span class="brand-light">Hub</span><small>MANAGEMENT SYSTEM</small></span>
-      </a>
 
-      <p class="nav-label">WORKSPACE</p>
-      <nav>
-        <a class="nav-link active" href="#dashboard"><span>◫</span> Dashboard</a>
-        <a class="nav-link" href="#add-student"><span>＋</span> Add Student</a>
-        <a class="nav-link" href="#records"><span>▤</span> Student Records</a>
-        <a class="nav-link" href="#analytics"><span>▥</span> Analytics</a>
-        <a class="nav-link" href="#concepts"><span>◇</span> Data Structures</a>
-        <a class="nav-link" href="#queue"><span>⇄</span> FIFO Queue</a>
-      </nav>
+<header>
+  <div class="logo">Student<span>Hub.</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#resources">Resources</a>
+    <a href="#tasks">My Tasks</a>
+  </nav>
+</header>
 
-      <div class="sidebar-bottom">
-        <div class="sidebar-badge">DS</div>
-        <div><strong>DS Mini Project</strong><small>Computer Engineering</small></div>
+<main>
+  <section class="hero" id="home">
+    <div>
+      <span class="tag">YOUR LEARNING SPACE</span>
+      <h1>Learn smarter.<br>Achieve more.</h1>
+      <p>One simple space for student resources, study planning and daily goals. Make every study session count!</p>
+    </div>
+    <div class="hero-icon">🎓</div>
+  </section>
+
+  <section class="stats">
+    <div class="stat-card">
+      <div class="stat-icon">📚</div>
+      <div>
+        <h3>06</h3>
+        <p>Learning resources</p>
       </div>
-    </aside>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">✅</div>
+      <div>
+        <h3 id="completedCount">0</h3>
+        <p>Tasks completed</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🎯</div>
+      <div>
+        <h3 id="pendingCount">0</h3>
+        <p>Tasks remaining</p>
+      </div>
+    </div>
+  </section>
 
-    <main class="main-content" id="dashboard">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">WORKSPACE / OVERVIEW</p>
-          <h1>Dashboard</h1>
-        </div>
-        <div class="profile">
-          <span class="online-dot"></span>
-          <div><strong>Student Admin</strong><small>Management Portal</small></div>
-          <span class="avatar">SA</span>
-        </div>
-      </header>
+  <section class="section" id="resources">
+    <div class="section-heading">
+      <div>
+        <h2>Explore Resources</h2>
+        <p class="subtitle">Find tools to support your learning journey.</p>
+      </div>
+      <input class="search-box" id="searchInput"
+        type="search" placeholder="🔍 Search resources...">
+    </div>
 
-      <section class="welcome-banner">
-        <div class="banner-copy">
-          <span class="banner-tag">STUDENT MANAGEMENT SYSTEM</span>
-          <h2>Manage your students.<br><span>Smarter and faster.</span></h2>
-          <p>Organize student records, track academic performance, and explore data structures in one place.</p>
-          <a class="banner-button" href="#add-student">＋ Add a student</a>
-        </div>
-        <div class="banner-graphic" aria-hidden="true">
-          <div class="graphic-ring"></div>
-          <div class="graphic-card card-one">A+</div>
-          <div class="graphic-card card-two">DS</div>
-          <div class="graphic-main">S</div>
-        </div>
-      </section>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="All">All</button>
+      <button class="filter-btn" data-filter="Study">Study</button>
+      <button class="filter-btn" data-filter="Coding">Coding</button>
+      <button class="filter-btn" data-filter="Career">Career</button>
+    </div>
 
-      <section class="stats-grid" aria-label="Student statistics">
-        <article class="stat-card">
-          <div class="stat-top"><span>Total Students</span><span class="stat-icon blue">♙</span></div>
-          <h2 id="totalStudents">0</h2><p class="stat-note">Students in your records</p>
-        </article>
-        <article class="stat-card">
-          <div class="stat-top"><span>Average Marks</span><span class="stat-icon purple">▤</span></div>
-          <h2 id="averageMarks">0<span class="unit">/100</span></h2><p class="stat-note">Class academic average</p>
-        </article>
-        <article class="stat-card">
-          <div class="stat-top"><span>Top Performer</span><span class="stat-icon green">↗</span></div>
-          <h2 class="text-stat" id="topPerformer">—</h2><p class="stat-note" id="topPerformerNote">Highest marks</p>
-        </article>
-        <article class="stat-card">
-          <div class="stat-top"><span>Queue Length</span><span class="stat-icon orange">⇄</span></div>
-          <h2 id="queueLength">0</h2><p class="stat-note">Pending queue requests</p>
-        </article>
-      </section>
+    <div class="resource-grid" id="resourceGrid">
 
-      <section class="content-grid">
-        <article class="panel" id="add-student">
-          <div class="section-heading">
-            <div><span class="section-kicker">STUDENT DETAILS</span><h2>Add a student</h2></div>
-            <span class="heading-symbol">＋</span>
-          </div>
-          <p class="panel-description">Enter the details below to add a student to the records.</p>
+      <article class="resource-card" data-category="Study">
+        <div class="card-icon">📖</div>
+        <span class="category">STUDY</span>
+        <h3>Study Materials</h3>
+        <p>Organize notes and access useful learning materials.</p>
+        <a class="card-link"
+          href="https://nptel.ac.in/" target="_blank" rel="noopener">
+          Explore learning ↗
+        </a>
+      </article>
 
-          <form id="studentForm">
-            <div class="form-grid">
-              <label class="full-width">Full name
-                <input type="text" id="studentName" placeholder="e.g. Gauri Dhumal" maxlength="80" required>
-              </label>
-              <label>Roll number
-                <input type="text" id="studentRoll" placeholder="e.g. 101" maxlength="20" required>
-              </label>
-              <label>Marks (out of 100)
-                <input type="number" id="studentMarks" placeholder="e.g. 85" min="0" max="100" step="0.01" required>
-              </label>
-            </div>
-            <p class="form-error" id="formError" role="alert"></p>
-            <div class="form-actions">
-              <button class="primary-btn" type="submit">＋ Add Student</button>
-              <button class="secondary-btn" type="reset">Clear form</button>
-            </div>
-          </form>
-        </article>
+      <article class="resource-card" data-category="Coding">
+        <div class="card-icon">💻</div>
+        <span class="category">CODING</span>
+        <h3>Learn Programming</h3>
+        <p>Practice programming concepts and build coding skills.</p>
+        <a class="card-link"
+          href="https://www.w3schools.com/" target="_blank" rel="noopener">
+          Start learning ↗
+        </a>
+      </article>
 
-        <article class="panel" id="snapshot">
-          <div class="section-heading">
-            <div><span class="section-kicker">AT A GLANCE</span><h2>Class snapshot</h2></div>
-            <span class="heading-symbol">◉</span>
-          </div>
-          <p class="panel-description">A quick look at the class performance.</p>
-          <div class="snapshot-row">
-            <div><div class="snapshot-label"><span>Excellent <small>(80–100)</small></span><strong id="excellentCount">0</strong></div><div class="progress-track"><div class="progress-fill blue-fill" id="excellentBar"></div></div></div>
-          </div>
-          <div class="snapshot-row">
-            <div><div class="snapshot-label"><span>Good <small>(60–79)</small></span><strong id="goodCount">0</strong></div><div class="progress-track"><div class="progress-fill green-fill" id="goodBar"></div></div></div>
-          </div>
-          <div class="snapshot-row">
-            <div><div class="snapshot-label"><span>Needs improvement <small>(0–59)</small></span><strong id="improveCount">0</strong></div><div class="progress-track"><div class="progress-fill orange-fill" id="improveBar"></div></div></div>
-          </div>
-          <div class="snapshot-footer"><span class="online-dot"></span> Statistics update automatically</div>
-        </article>
-      </section>
+      <article class="resource-card" data-category="Career">
+        <div class="card-icon">📝</div>
+        <span class="category">CAREER</span>
+        <h3>Resume Building</h3>
+        <p>Learn how to prepare a clear and professional resume.</p>
+        <a class="card-link"
+          href="https://www.canva.com/resumes/" target="_blank" rel="noopener">
+          Create a resume ↗
+        </a>
+      </article>
 
-      <section class="panel records-panel" id="records">
-        <div class="section-heading records-heading">
-          <div><span class="section-kicker">DATABASE</span><h2>Student records</h2><p class="panel-description">Search, sort, and manage saved student details.</p></div>
-          <span class="record-count" id="recordCount">0 records</span>
-        </div>
-        <div class="toolbar">
-          <div class="search-wrap"><span>⌕</span><input type="search" id="searchInput" placeholder="Search name or roll number..." aria-label="Search students"></div>
-          <label class="sort-label">Sort by
-            <select id="sortSelect" aria-label="Sort student records">
-              <option value="default">Recently added</option>
-              <option value="name">Name (A–Z)</option>
-              <option value="roll">Roll number</option>
-              <option value="marksDesc">Marks: high to low</option>
-              <option value="marksAsc">Marks: low to high</option>
-            </select>
-          </label>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>STUDENT</th><th>ROLL NO.</th><th>MARKS</th><th>PERFORMANCE</th><th>ACTION</th></tr></thead>
-            <tbody id="studentTableBody"></tbody>
-          </table>
-          <div class="empty-state" id="emptyState"><div class="empty-icon">▤</div><strong>No students found</strong><p>Add a student or change your search.</p></div>
-        </div>
-        <div class="table-footer"><span id="tableSummary">Showing 0 students</span><button class="text-button" id="undoButton" type="button" disabled>↶ Undo last delete</button></div>
-      </section>
+      <article class="resource-card" data-category="Study">
+        <div class="card-icon">🎥</div>
+        <span class="category">STUDY</span>
+        <h3>Video Learning</h3>
+        <p>Discover educational videos and tutorials.</p>
+        <a class="card-link"
+          href="https://www.khanacademy.org/" target="_blank" rel="noopener">
+          Watch and learn ↗
+        </a>
+      </article>
 
-      <section class="panel" id="analytics">
-        <div class="section-heading">
-          <div><span class="section-kicker">PERFORMANCE INSIGHTS</span><h2>Academic analytics</h2><p class="panel-description">Understand the marks distribution of your class.</p></div>
-        </div>
-        <div class="charts-grid">
-          <article class="chart-card">
-            <div class="chart-title"><h3>Marks overview</h3><span class="chart-pill">BY STUDENT</span></div>
-            <div class="bar-chart" id="marksChart"><p class="chart-empty">Add students to see the marks chart.</p></div>
-            <div class="chart-legend"><span><i class="legend-dot"></i> Marks out of 100</span></div>
-          </article>
-          <article class="chart-card">
-            <div class="chart-title"><h3>Grade distribution</h3><span class="chart-pill">CLASS PROFILE</span></div>
-            <div id="gradeChart" class="grade-chart"></div>
-            <p class="chart-footnote">Based on marks entered in student records.</p>
-          </article>
-        </div>
-      </section>
+      <article class="resource-card" data-category="Coding">
+        <div class="card-icon">🧩</div>
+        <span class="category">CODING</span>
+        <h3>DSA Practice</h3>
+        <p>Improve problem-solving and data structure skills.</p>
+        <a class="card-link"
+          href="https://www.geeksforgeeks.org/" target="_blank" rel="noopener">
+          Practice now ↗
+        </a>
+      </article>
 
-      <section class="panel" id="concepts">
-        <div class="section-heading">
-          <div><span class="section-kicker">LEARN BY DOING</span><h2>Data structures showcase</h2><p class="panel-description">Core DS concepts demonstrated by this project.</p></div>
-        </div>
-        <div class="concept-grid">
-          <article class="concept-card"><div class="concept-icon indigo">▤</div><h3>Array</h3><p>Student objects are stored and processed as a collection.</p><code>students[]</code></article>
-          <article class="concept-card"><div class="concept-icon teal">⌕</div><h3>Searching</h3><p>Find a student using a name or roll number.</p><code>filter()</code></article>
-          <article class="concept-card"><div class="concept-icon violet">↕</div><h3>Sorting</h3><p>Arrange records by name, roll number, or marks.</p><code>sort()</code></article>
-          <article class="concept-card"><div class="concept-icon amber">⇄</div><h3>Queue (FIFO)</h3><p>Process requests in first-in, first-out order.</p><code>enqueue / dequeue</code></article>
-        </div>
-      </section>
+      <article class="resource-card" data-category="Career">
+        <div class="card-icon">🚀</div>
+        <span class="category">CAREER</span>
+        <h3>Career Exploration</h3>
+        <p>Explore career paths, skills and professional opportunities.</p>
+        <a class="card-link"
+          href="https://www.linkedin.com/learning/" target="_blank" rel="noopener">
+          Explore careers ↗
+        </a>
+      </article>
 
-      <section class="panel queue-panel" id="queue">
-        <div class="section-heading">
-          <div><span class="section-kicker">QUEUE SIMULATION</span><h2>FIFO request queue</h2><p class="panel-description">First In, First Out — the first request added is the first request processed.</p></div>
-          <span class="fifo-badge">FIFO</span>
-        </div>
-        <form id="queueForm" class="queue-form">
-          <input id="queueInput" type="text" maxlength="80" placeholder="Enter a request (e.g. Verify documents)" required>
-          <button class="primary-btn" type="submit">＋ Enqueue</button>
-          <button class="secondary-btn" id="dequeueButton" type="button">Process first</button>
-        </form>
-        <div id="queueVisual" class="queue-visual"><p class="queue-empty">Your queue is empty. Add a request to begin.</p></div>
-        <p class="queue-help">Requests are saved in your browser. Processing always removes the oldest request first.</p>
-      </section>
+    </div>
+    <p class="empty" id="noResults" hidden>No resources found. Try another search.</p>
+  </section>
 
-      <footer class="footer"><span><strong>StudentHub</strong> · Student Record Management System</span><span>Data Structures Mini Project <i>•</i> Built for learning</span></footer>
-    </main>
-  </div>
+  <section class="lower-grid" id="tasks">
+    <div class="task-panel">
+      <h2>My Daily Tasks ✨</h2>
+      <p class="subtitle">Add your goals and track your progress.</p>
+
+      <form class="task-form" id="taskForm">
+        <input id="taskInput" type="text"
+          placeholder="Enter a study task..." maxlength="120" required>
+        <button type="submit">Add</button>
+      </form>
+
+      <ul id="taskList"></ul>
+      <p class="empty" id="emptyTasks">No tasks yet. Add your first goal!</p>
+    </div>
+
+    <div class="task-panel">
+      <h2>Study Motivation 🌟</h2>
+      <p class="subtitle">Small steps lead to big achievements.</p>
+
+      <div class="tip">
+        <h3>Today's reminder</h3>
+        <p>Stay consistent, take short breaks, and focus on understanding concepts instead of memorizing everything.</p>
+      </div>
+
+      <div class="tip">
+        <h3>Student tip</h3>
+        <p>Choose your three most important tasks each day. Complete them one at a time and celebrate your progress.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 StudentHub. Built for students, powered by learning. 💜</p>
+</footer>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+const cards = [...document.querySelectorAll(".resource-card")];
+const filterButtons = [...document.querySelectorAll(".filter-btn")];
+const noResults = document.getElementById("noResults");
+
+let activeFilter = "All";
+
+function filterResources() {
+  const query = searchInput.value.toLowerCase().trim();
+  let visible = 0;
+
+  cards.forEach(card => {
+    const matchesText = card.textContent.toLowerCase().includes(query);
+    const matchesCategory =
+      activeFilter === "All" || card.dataset.category === activeFilter;
+
+    const show = matchesText && matchesCategory;
+    card.hidden = !show;
+    if (show) visible++;
+  });
+
+  noResults.hidden = visible !== 0;
+}
+
+searchInput.addEventListener("input", filterResources);
+
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    activeFilter = button.dataset.filter;
+
+    filterButtons.forEach(item =>
+      item.classList.toggle("active", item === button)
+    );
+
+    filterResources();
+  });
+});
+
+const taskForm = document.getElementById("taskForm");
+const taskInput = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
+const emptyTasks = document.getElementById("emptyTasks");
+
+let tasks = [];
+
+try {
+  tasks = JSON.parse(localStorage.getItem("studentHubTasks") || "[]");
+  if (!Array.isArray(tasks)) tasks = [];
+} catch {
+  tasks = [];
+}
+
+function saveTasks() {
+  try {
+    localStorage.setItem("studentHubTasks", JSON.stringify(tasks));
+  } catch {
+    // Tasks still work for the current page session.
+  }
+}
+
+function renderTasks() {
+  taskList.replaceChildren();
+
+  tasks.forEach((task, index) => {
+    const li = document.createElement("li");
+    li.className = task.done ? "done" : "";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.done;
+    checkbox.setAttribute("aria-label", "Mark task complete");
+
+    checkbox.addEventListener("change", () => {
+      tasks[index].done = checkbox.checked;
+      saveTasks();
+      renderTasks();
+    });
+
+    const span = document.createElement("span");
+    span.textContent = task.text;
+
+    const remove = document.createElement("button");
+    remove.className = "delete-btn";
+    remove.type = "button";
+    remove.textContent = "×";
+    remove.setAttribute("aria-label", "Delete task");
+
+    remove.addEventListener("click", () => {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    });
+
+    li.append(checkbox, span, remove);
+    taskList.appendChild(li);
+  });
+
+  emptyTasks.hidden = tasks.length > 0;
+
+  document.getElementById("completedCount").textContent =
+    tasks.filter(task => task.done).length;
+
+  document.getElementById("pendingCount").textContent =
+    tasks.filter(task => !task.done).length;
+}
+
+taskForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const text = taskInput.value.trim();
+  if (!text) return;
+
+  tasks.push({ text, done: false });
+  saveTasks();
+  renderTasks();
+  taskInput.value = "";
+  taskInput.focus();
+});
+
+renderTasks();
+</script>
+
 </body>
 </html>
