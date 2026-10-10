@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentHub | Student Management</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard">
+        <span class="brand-logo">S</span>
+        <span>Student<span class="brand-light">Hub</span><small>MANAGEMENT SYSTEM</small></span>
+      </a>
+
+      <p class="nav-label">WORKSPACE</p>
+      <nav>
+        <a class="nav-link active" href="#dashboard"><span>◫</span> Dashboard</a>
+        <a class="nav-link" href="#add-student"><span>＋</span> Add Student</a>
+        <a class="nav-link" href="#records"><span>▤</span> Student Records</a>
+        <a class="nav-link" href="#analytics"><span>▥</span> Analytics</a>
+        <a class="nav-link" href="#concepts"><span>◇</span> Data Structures</a>
+        <a class="nav-link" href="#queue"><span>⇄</span> FIFO Queue</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-badge">DS</div>
+        <div><strong>DS Mini Project</strong><small>Computer Engineering</small></div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">WORKSPACE / OVERVIEW</p>
+          <h1>Dashboard</h1>
+        </div>
+        <div class="profile">
+          <span class="online-dot"></span>
+          <div><strong>Student Admin</strong><small>Management Portal</small></div>
+          <span class="avatar">SA</span>
+        </div>
+      </header>
+
+      <section class="welcome-banner">
+        <div class="banner-copy">
+          <span class="banner-tag">STUDENT MANAGEMENT SYSTEM</span>
+          <h2>Manage your students.<br><span>Smarter and faster.</span></h2>
+          <p>Organize student records, track academic performance, and explore data structures in one place.</p>
+          <a class="banner-button" href="#add-student">＋ Add a student</a>
+        </div>
+        <div class="banner-graphic" aria-hidden="true">
+          <div class="graphic-ring"></div>
+          <div class="graphic-card card-one">A+</div>
+          <div class="graphic-card card-two">DS</div>
+          <div class="graphic-main">S</div>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Student statistics">
+        <article class="stat-card">
+          <div class="stat-top"><span>Total Students</span><span class="stat-icon blue">♙</span></div>
+          <h2 id="totalStudents">0</h2><p class="stat-note">Students in your records</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Average Marks</span><span class="stat-icon purple">▤</span></div>
+          <h2 id="averageMarks">0<span class="unit">/100</span></h2><p class="stat-note">Class academic average</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Top Performer</span><span class="stat-icon green">↗</span></div>
+          <h2 class="text-stat" id="topPerformer">—</h2><p class="stat-note" id="topPerformerNote">Highest marks</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Queue Length</span><span class="stat-icon orange">⇄</span></div>
+          <h2 id="queueLength">0</h2><p class="stat-note">Pending queue requests</p>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel" id="add-student">
+          <div class="section-heading">
+            <div><span class="section-kicker">STUDENT DETAILS</span><h2>Add a student</h2></div>
+            <span class="heading-symbol">＋</span>
+          </div>
+          <p class="panel-description">Enter the details below to add a student to the records.</p>
+
+          <form id="studentForm">
+            <div class="form-grid">
+              <label class="full-width">Full name
+                <input type="text" id="studentName" placeholder="e.g. Gauri Dhumal" maxlength="80" required>
+              </label>
+              <label>Roll number
+                <input type="text" id="studentRoll" placeholder="e.g. 101" maxlength="20" required>
+              </label>
+              <label>Marks (out of 100)
+                <input type="number" id="studentMarks" placeholder="e.g. 85" min="0" max="100" step="0.01" required>
+              </label>
+            </div>
+            <p class="form-error" id="formError" role="alert"></p>
+            <div class="form-actions">
+              <button class="primary-btn" type="submit">＋ Add Student</button>
+              <button class="secondary-btn" type="reset">Clear form</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="panel" id="snapshot">
+          <div class="section-heading">
+            <div><span class="section-kicker">AT A GLANCE</span><h2>Class snapshot</h2></div>
+            <span class="heading-symbol">◉</span>
+          </div>
+          <p class="panel-description">A quick look at the class performance.</p>
+          <div class="snapshot-row">
+            <div><div class="snapshot-label"><span>Excellent <small>(80–100)</small></span><strong id="excellentCount">0</strong></div><div class="progress-track"><div class="progress-fill blue-fill" id="excellentBar"></div></div></div>
+          </div>
+          <div class="snapshot-row">
+            <div><div class="snapshot-label"><span>Good <small>(60–79)</small></span><strong id="goodCount">0</strong></div><div class="progress-track"><div class="progress-fill green-fill" id="goodBar"></div></div></div>
+          </div>
+          <div class="snapshot-row">
+            <div><div class="snapshot-label"><span>Needs improvement <small>(0–59)</small></span><strong id="improveCount">0</strong></div><div class="progress-track"><div class="progress-fill orange-fill" id="improveBar"></div></div></div>
+          </div>
+          <div class="snapshot-footer"><span class="online-dot"></span> Statistics update automatically</div>
+        </article>
+      </section>
+
+      <section class="panel records-panel" id="records">
+        <div class="section-heading records-heading">
+          <div><span class="section-kicker">DATABASE</span><h2>Student records</h2><p class="panel-description">Search, sort, and manage saved student details.</p></div>
+          <span class="record-count" id="recordCount">0 records</span>
+        </div>
+        <div class="toolbar">
+          <div class="search-wrap"><span>⌕</span><input type="search" id="searchInput" placeholder="Search name or roll number..." aria-label="Search students"></div>
+          <label class="sort-label">Sort by
+            <select id="sortSelect" aria-label="Sort student records">
+              <option value="default">Recently added</option>
+              <option value="name">Name (A–Z)</option>
+              <option value="roll">Roll number</option>
+              <option value="marksDesc">Marks: high to low</option>
+              <option value="marksAsc">Marks: low to high</option>
+            </select>
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>STUDENT</th><th>ROLL NO.</th><th>MARKS</th><th>PERFORMANCE</th><th>ACTION</th></tr></thead>
+            <tbody id="studentTableBody"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState"><div class="empty-icon">▤</div><strong>No students found</strong><p>Add a student or change your search.</p></div>
+        </div>
+        <div class="table-footer"><span id="tableSummary">Showing 0 students</span><button class="text-button" id="undoButton" type="button" disabled>↶ Undo last delete</button></div>
+      </section>
+
+      <section class="panel" id="analytics">
+        <div class="section-heading">
+          <div><span class="section-kicker">PERFORMANCE INSIGHTS</span><h2>Academic analytics</h2><p class="panel-description">Understand the marks distribution of your class.</p></div>
+        </div>
+        <div class="charts-grid">
+          <article class="chart-card">
+            <div class="chart-title"><h3>Marks overview</h3><span class="chart-pill">BY STUDENT</span></div>
+            <div class="bar-chart" id="marksChart"><p class="chart-empty">Add students to see the marks chart.</p></div>
+            <div class="chart-legend"><span><i class="legend-dot"></i> Marks out of 100</span></div>
+          </article>
+          <article class="chart-card">
+            <div class="chart-title"><h3>Grade distribution</h3><span class="chart-pill">CLASS PROFILE</span></div>
+            <div id="gradeChart" class="grade-chart"></div>
+            <p class="chart-footnote">Based on marks entered in student records.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="concepts">
+        <div class="section-heading">
+          <div><span class="section-kicker">LEARN BY DOING</span><h2>Data structures showcase</h2><p class="panel-description">Core DS concepts demonstrated by this project.</p></div>
+        </div>
+        <div class="concept-grid">
+          <article class="concept-card"><div class="concept-icon indigo">▤</div><h3>Array</h3><p>Student objects are stored and processed as a collection.</p><code>students[]</code></article>
+          <article class="concept-card"><div class="concept-icon teal">⌕</div><h3>Searching</h3><p>Find a student using a name or roll number.</p><code>filter()</code></article>
+          <article class="concept-card"><div class="concept-icon violet">↕</div><h3>Sorting</h3><p>Arrange records by name, roll number, or marks.</p><code>sort()</code></article>
+          <article class="concept-card"><div class="concept-icon amber">⇄</div><h3>Queue (FIFO)</h3><p>Process requests in first-in, first-out order.</p><code>enqueue / dequeue</code></article>
+        </div>
+      </section>
+
+      <section class="panel queue-panel" id="queue">
+        <div class="section-heading">
+          <div><span class="section-kicker">QUEUE SIMULATION</span><h2>FIFO request queue</h2><p class="panel-description">First In, First Out — the first request added is the first request processed.</p></div>
+          <span class="fifo-badge">FIFO</span>
+        </div>
+        <form id="queueForm" class="queue-form">
+          <input id="queueInput" type="text" maxlength="80" placeholder="Enter a request (e.g. Verify documents)" required>
+          <button class="primary-btn" type="submit">＋ Enqueue</button>
+          <button class="secondary-btn" id="dequeueButton" type="button">Process first</button>
+        </form>
+        <div id="queueVisual" class="queue-visual"><p class="queue-empty">Your queue is empty. Add a request to begin.</p></div>
+        <p class="queue-help">Requests are saved in your browser. Processing always removes the oldest request first.</p>
+      </section>
+
+      <footer class="footer"><span><strong>StudentHub</strong> · Student Record Management System</span><span>Data Structures Mini Project <i>•</i> Built for learning</span></footer>
+    </main>
+  </div>
+</body>
+</html>
